@@ -109,6 +109,16 @@ Ces quatre points n'étaient pas visibles avec le jeu de démonstration :
   merge checks*) et création de jeton sont tous refusés. Aucune politique
   d'allowlist n'est visible dans `admin.atlassian.com` (Atlassian Guard : « aucune
   politique n'a été créée »), et l'API REST Bitbucket n'expose pas ce réglage.
+- **Précision du 14/11** (sondage direct de l'API, jeton de preuve en main) : le
+  blocage porte désormais sur le **dépôt**, plus sur le workspace.
+  `2.0/workspaces/{b44dcce8-…}` et `2.0/repositories/one-atlas-cndz` répondent —
+  `checkout-api` est listé — mais `2.0/repositories/one-atlas-cndz/checkout-api`,
+  `refs/branches` et `default-reviewers` renvoient
+  `To access this repository, an admin must whitelist your IP.`. Lecture du
+  contenu, écriture et merge checks restent donc impossibles ; le déblocage est
+  une action d'administrateur (ajouter `46.193.66.237`), pas un problème de code.
+  L'endpoint `2.0/user` répond de son côté « not accessible by this authentication
+  mechanism » : le jeton est limité aux API de preuve, sans identité globale.
 
 ## 5 bis. Une preuve vérifiable par étape
 
@@ -164,13 +174,30 @@ Ce point a corrigé une panne réelle : du 11 au 14/11, le workflow `demo-live`
 échouait à chaque tour (`! [rejected] data-live -> data-live (stale info)`) — il
 créait une branche orpheline et poussait avec `--force-with-lease` sans avoir
 récupéré la branche, donc écrasait au mieux l'historique du job local, au pire
-se faisait rejeter. Les 11 cas de `scripts/test/publier-preuve.test.ts` jouent
+se faisait rejeter. Les 13 cas de `scripts/test/publier-preuve.test.ts` jouent
 cette course sur un faux git, sans dépôt ni réseau.
+
+**Fraîcheur de l'état affiché.** `raw.githubusercontent.com` sert la branche avec
+`cache-control: max-age=300` : la page peut donc afficher un état jusqu'à cinq
+minutes en retard, et un paramètre d'URL (« cache-buster ») n'y change rien — le
+cache est indexé par chemin, pas par requête. Ce n'est pas un mensonge : la page
+affiche l'*horodatage du rapport*, pas l'heure du chargement, et le rapport le
+plus récent est toujours celui lu (un tour toutes les 15–30 min, donc un retard
+toujours inférieur à la cadence). `cache: 'no-store'` côté page sert malgré tout :
+il empêche le cache *navigateur* de jouer sur un second chargement.
+
+La course entre les deux écrivains a été provoquée en réel le 14/11 (déclenchement
+du workflow et job local lancés ensemble) : deux commits publiés à 14 secondes
+d'intervalle (`65b3c73` local, `7e8232e` GitHub), **tous deux conservés et chaînés**
+— un seul parent par commit, aucun écrasement. C'est le comportement que les tests
+simulaient.
 
 ## 7. Ce qui manque encore pour la preuve « bout en bout »
 
 1. La PR Bitbucket réelle (création de dépôt, branche `feature/MAC-2-…`, PR) et le
-   déclenchement du contrôle par Bitbucket : bloqué par l'allowlist IP (§5).
+   déclenchement du contrôle par Bitbucket : bloqué par l'allowlist IP — état
+   précis sondé le 14/11 en §5. Rien n'est contournable côté code : c'est une
+   action d'administrateur.
 2. L'activation des *custom merge checks* dans les réglages de l'espace, puis
    l'ajout du contrôle au dépôt : même page, même blocage.
 3. Le jumelage avec l'UUID réel de l'espace : le code à usage unique se génère sur
