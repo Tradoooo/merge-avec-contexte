@@ -24,6 +24,7 @@
     "preuve:captures": "vite-node scripts/preuve-captures.ts",
     "preuve:verifier": "vite-node scripts/preuve-verifier.ts",
     "preuve:bitbucket": "vite-node scripts/preuve-bitbucket.ts",
+    "preuve:publier": "vite-node scripts/publier-preuve.ts",
     "demo:fictif": "vite-node scripts/demo-entree.ts",
     "installer:espace": "node scripts/installer-espace-bitbucket.mjs"
   },
