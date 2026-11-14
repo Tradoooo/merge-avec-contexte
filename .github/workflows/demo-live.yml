@@ -44,17 +44,17 @@ jobs:
           MAC_DEMO_JSON_PATH: 'preuve.json'
         run: npx vite-node scripts/preuve-reelle.ts || true
 
+      # Publication via le script partagé avec le déclencheur local
+      # (scripts/publier-preuve.ts) : une seule implémentation, historique
+      # linéaire, push sans réécriture. Le workflow et le job local tournent
+      # sur des cadences différentes (30 min / 15 min) : celui qui arrive en
+      # second reconstruit son commit au-dessus de la tête fraîche, au lieu
+      # d'écraser la branche (cause du `demo-live` rouge du 11 au 14/11 :
+      # branche orpheline + `--force-with-lease` sans fetching → « stale info »).
       - name: Publier l'état sur la branche data-live
         run: |
           set -e
           if [ ! -f preuve.json ]; then
             echo '{"horodatage":null,"echecs":-1,"etapes":[],"note":"exécution en échec"}' > preuve.json
           fi
-          git checkout --orphan data-live 2>/dev/null || git checkout data-live
-          git rm -rf --cached . 2>/dev/null || true
-          cp preuve.json /tmp/p.json
-          rm -rf ./* .github 2>/dev/null || true
-          mkdir -p . && cp /tmp/p.json preuve.json
-          git add preuve.json
-          git -c user.name='b' -c user.email='b@local' commit -m "démo réelle $(date -u +%FT%TZ)" || true
-          git push --force-with-lease origin data-live
+          npm run preuve:publier -- preuve.json --message "démo réelle $(date -u +%FT%TZ)"

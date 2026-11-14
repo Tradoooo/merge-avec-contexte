@@ -135,6 +135,38 @@ remet la démonstration et redéploie. Variables d'environnement reconnues :
 `MAC_BRIDGE_URL`, `MAC_SHARED_SECRET`, `MAC_ESPACE_UUID` (par défaut `ws-demo`,
 l'espace actuellement jumelé — voir §7 pour le passage à l'UUID réel).
 
+## 6 bis. La preuve en direct (branche `data-live`)
+
+La page publique affiche un état **vivant** : `site/temps-reel.js` interroge, au
+chargement, (1) le pont déployé (route `health`, publique) et (2) le dernier
+rapport de démonstration, lu sur la branche `data-live`
+(`raw.githubusercontent.com/.../data-live/preuve.json`). Rien n'est capturé :
+les deux appels sont faits au chargement, et si l'un manque la sortie statique
+reste lisible.
+
+Deux écrivains alimentent cette branche, sur des cadences différentes :
+
+| Écrivain | Cadence | Où |
+|---|---|---|
+| Workflow GitHub `demo-live` | 30 min (+ à la demande) | `.github/workflows/demo-live.yml` |
+| Déclencheur systemd local `mac-preuve-live` | 15 min | `~/.config/systemd/user/` (hors dépôt) |
+
+Ils passent **tous deux** par `scripts/publier-preuve.ts` : une seule
+implémentation de la publication, donc un seul comportement. Les règles sont
+celles d'un canal lu par le public — historique **linéaire** (chaque commit a la
+tête distante pour parent) et push **sans réécriture** (aucun push forcé, aucune
+branche orpheline). Quand l'autre écrivain a publié entre le
+téléchargement et le push, le script reconstruit son commit au-dessus de la tête
+fraîche, jusqu'à trois tentatives. Le commit est construit par « plumbing »
+(`hash-object`, `mktree`, `commit-tree`) : l'arbre de travail n'est jamais touché.
+
+Ce point a corrigé une panne réelle : du 11 au 14/11, le workflow `demo-live`
+échouait à chaque tour (`! [rejected] data-live -> data-live (stale info)`) — il
+créait une branche orpheline et poussait avec `--force-with-lease` sans avoir
+récupéré la branche, donc écrasait au mieux l'historique du job local, au pire
+se faisait rejeter. Les 11 cas de `scripts/test/publier-preuve.test.ts` jouent
+cette course sur un faux git, sans dépôt ni réseau.
+
 ## 7. Ce qui manque encore pour la preuve « bout en bout »
 
 1. La PR Bitbucket réelle (création de dépôt, branche `feature/MAC-2-…`, PR) et le
