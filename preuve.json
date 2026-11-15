@@ -1,21 +1,21 @@
 {
-  "horodatage": "2026-11-15T09:49:22.844Z",
+  "horodatage": "2026-11-15T10:04:41.678Z",
   "site": "https://one-atlas-cndz.atlassian.net",
   "espace": "{b44dcce8-0f72-4e36-bf40-65aead14ce35}",
-  "echecs": 2,
-  "medianeMs": 921,
+  "echecs": 0,
+  "medianeMs": 767,
   "etapes": [
     {
       "nom": "Pont joignable",
       "ok": true,
       "detail": "HTTP 200",
-      "ms": 2635
+      "ms": 2503
     },
     {
       "nom": "HTTP 200, requête signée",
       "ok": true,
       "detail": "HTTP 200",
-      "ms": 1272
+      "ms": 1278
     },
     {
       "nom": "Verdict blocked",
@@ -25,51 +25,51 @@
     },
     {
       "nom": "Les deux raisons réelles sont citées",
-      "ok": false,
-      "detail": "R-03(blocking) R-04(blocking) R-06(blocking) R-08(warning)",
+      "ok": true,
+      "detail": "R-03(blocking) R-06(blocking) R-08(warning)",
       "ms": 0
     },
     {
       "nom": "HTTP 200",
       "ok": true,
       "detail": "HTTP 200",
-      "ms": 961
+      "ms": 928
     },
     {
       "nom": "Verdict allowed",
-      "ok": false,
-      "detail": "verdict blocked",
+      "ok": true,
+      "detail": "verdict allowed",
       "ms": 0
     },
     {
       "nom": "Avertissement sur la version réellement publiée",
       "ok": true,
-      "detail": "R-04(blocking) R-07(warning) R-08(warning)",
+      "detail": "R-07(warning) R-08(warning)",
       "ms": 0
     },
     {
       "nom": "R-01 signale une clé absente",
       "ok": true,
-      "detail": "R-01(warning) R-04(blocking) R-08(warning) R-11(information)",
-      "ms": 921
+      "detail": "R-01(warning) R-08(warning) R-11(information)",
+      "ms": 722
     },
     {
       "nom": "R-01 signale l’absence de ticket",
       "ok": true,
-      "detail": "R-01(warning) R-04(blocking) R-08(warning)",
-      "ms": 731
+      "detail": "R-01(warning) R-08(warning)",
+      "ms": 767
     },
     {
       "nom": "La carte expose les 13 règles",
       "ok": true,
       "detail": "13 règle(s)",
-      "ms": 756
+      "ms": 716
     },
     {
       "nom": "HTTP 401 sans signature",
       "ok": true,
       "detail": "HTTP 401",
-      "ms": 474
+      "ms": 469
     },
     {
       "nom": "L’espace Bitbucket existe et a le bon uuid",
