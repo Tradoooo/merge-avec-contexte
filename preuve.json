@@ -1,15 +1,15 @@
 {
-  "horodatage": "2026-11-17T22:10:05.104Z",
+  "horodatage": "2026-11-17T22:25:23.058Z",
   "site": "https://one-atlas-cndz.atlassian.net",
   "espace": "{b44dcce8-0f72-4e36-bf40-65aead14ce35}",
   "echecs": 0,
-  "medianeMs": 1014,
+  "medianeMs": 778,
   "etapes": [
     {
       "nom": "Pont joignable",
       "ok": true,
       "detail": "HTTP 200",
-      "ms": 2727
+      "ms": 2576
     },
     {
       "nom": "HTTP 200, requête signée",
@@ -33,7 +33,7 @@
       "nom": "HTTP 200",
       "ok": true,
       "detail": "HTTP 200",
-      "ms": 883
+      "ms": 778
     },
     {
       "nom": "Verdict allowed",
@@ -51,25 +51,25 @@
       "nom": "R-01 signale une clé absente",
       "ok": true,
       "detail": "R-01(warning) R-08(warning) R-11(information)",
-      "ms": 1014
+      "ms": 1130
     },
     {
       "nom": "R-01 signale l’absence de ticket",
       "ok": true,
       "detail": "R-01(warning) R-08(warning)",
-      "ms": 515
+      "ms": 751
     },
     {
       "nom": "La carte expose les 13 règles",
       "ok": true,
       "detail": "13 règle(s)",
-      "ms": 3164
+      "ms": 615
     },
     {
       "nom": "HTTP 401 sans signature",
       "ok": true,
       "detail": "HTTP 401",
-      "ms": 324
+      "ms": 307
     },
     {
       "nom": "L’espace Bitbucket existe et a le bon uuid",
