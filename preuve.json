@@ -1,21 +1,21 @@
 {
-  "horodatage": "2026-11-24T01:52:37.894Z",
+  "horodatage": "2026-11-24T02:07:46.071Z",
   "site": "https://one-atlas-cndz.atlassian.net",
   "espace": "{b44dcce8-0f72-4e36-bf40-65aead14ce35}",
   "echecs": 0,
-  "medianeMs": 955,
+  "medianeMs": 769,
   "etapes": [
     {
       "nom": "Pont joignable",
       "ok": true,
       "detail": "HTTP 200",
-      "ms": 2504
+      "ms": 3333
     },
     {
       "nom": "HTTP 200, requête signée",
       "ok": true,
       "detail": "HTTP 200",
-      "ms": 1336
+      "ms": 1314
     },
     {
       "nom": "Verdict blocked",
@@ -33,7 +33,7 @@
       "nom": "HTTP 200",
       "ok": true,
       "detail": "HTTP 200",
-      "ms": 1035
+      "ms": 1022
     },
     {
       "nom": "Verdict allowed",
@@ -51,19 +51,19 @@
       "nom": "R-01 signale une clé absente",
       "ok": true,
       "detail": "R-01(warning) R-08(warning) R-11(information)",
-      "ms": 955
+      "ms": 757
     },
     {
       "nom": "R-01 signale l’absence de ticket",
       "ok": true,
       "detail": "R-01(warning) R-08(warning)",
-      "ms": 719
+      "ms": 755
     },
     {
       "nom": "La carte expose les 13 règles",
       "ok": true,
       "detail": "13 règle(s)",
-      "ms": 723
+      "ms": 769
     },
     {
       "nom": "HTTP 401 sans signature",
